@@ -448,8 +448,7 @@
    "morrisons": {"packs":[[1.85,2.59],[3.46,5.0]],"product":"Morrisons Basa Fillets","checked":"2026-10-08","items":[{"n":"Morrisons Basa Fillets","u":"https://groceries.morrisons.com/products/morrisons-basa-fillets/113038072"},{"n":"Morrisons 3 Skinless & Boneless Basa Fillets 450g","u":"https://groceries.morrisons.com/products/morrisons-3-skinless-boneless-basa-fillets-450g/115000465"}]}
   },
   "prawns": {
-   "tesco": {"packs":[[170,3.4]],"product":"Tesco Cooked King Prawns 170G","checked":"2026-10-05","items":[{"n":"Tesco Cooked King Prawns 170G"}]},
-   "morrisons": {"packs":[[150,10.0]],"product":"Morrisons Cooked & Peeled King Prawns 150g","checked":"2026-10-08","items":[{"n":"Morrisons Cooked & Peeled King Prawns 150g","u":"https://groceries.morrisons.com/products/morrisons-cooked-peeled-king-prawns-150g/108809733"}]}
+   "tesco": {"packs":[[170,3.4]],"product":"Tesco Cooked King Prawns 170G","checked":"2026-10-05","items":[{"n":"Tesco Cooked King Prawns 170G"}]}
   },
   "chorizo": {
    "tesco": {"packs":[[150,1.25]],"product":"Tesco Spanish Chorizo Sausage Slices 150G","checked":"2026-10-05","items":[{"n":"Tesco Spanish Chorizo Sausage Slices 150G"}]},
