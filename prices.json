@@ -359,8 +359,7 @@
   },
   "mozzarella": {
    "tesco": {"packs":[[250,2.5]],"product":"Tesco Grated Mozzarella 250G","checked":"2026-10-05","items":[{"n":"Tesco Grated Mozzarella 250G"}]},
-   "sainsburys": {"packs":[[250,2.5]],"product":"Sainsburys Grated Mozzarella Cheese 250g","checked":"2026-10-05","items":[{"n":"Sainsburys Grated Mozzarella Cheese 250g"}]},
-   "morrisons": {"packs":[[250,4.5]],"product":"Morrisons Grated Mozzarella 250g","checked":"2026-10-08","items":[{"n":"Morrisons Grated Mozzarella 250g","u":"https://groceries.morrisons.com/products/morrisons-grated-mozzarella-250g/116164306"}]}
+   "sainsburys": {"packs":[[250,2.5]],"product":"Sainsburys Grated Mozzarella Cheese 250g","checked":"2026-10-05","items":[{"n":"Sainsburys Grated Mozzarella Cheese 250g"}]}
   },
   "tortilla_chips": {
    "tesco": {"packs":[[200,0.57]],"product":"Stockwell & Co. Lightly Salted Tortilla Chips 200g","checked":"2026-10-05","items":[{"n":"Stockwell & Co. Lightly Salted Tortilla Chips 200g"}]},
