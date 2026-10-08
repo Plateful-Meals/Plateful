@@ -510,8 +510,7 @@
   },
   "strawberries": {
    "tesco": {"packs":[[400,2.5]],"product":"Tesco Strawberries 400G","checked":"2026-10-05","items":[{"n":"Tesco Strawberries 400G"}]},
-   "sainsburys": {"packs":[[400,2.5]],"product":"Sainsburys Strawberries 400g","checked":"2026-10-05","items":[{"n":"Sainsburys Strawberries 400g"}]},
-   "morrisons": {"packs":[[336,4.0]],"product":"Morrisons Strawberry, Mango, Raspberry & Apple","checked":"2026-10-08","items":[{"n":"Morrisons Strawberry, Mango, Raspberry & Apple","u":"https://groceries.morrisons.com/products/morrisons-strawberry-mango-raspberry-apple/110221980"}]}
+   "sainsburys": {"packs":[[400,2.5]],"product":"Sainsburys Strawberries 400g","checked":"2026-10-05","items":[{"n":"Sainsburys Strawberries 400g"}]}
   },
   "blueberries": {
    "tesco": {"packs":[[150,1.55]],"product":"Rosedene Farms Blueberries 150G","checked":"2026-10-05","items":[{"n":"Rosedene Farms Blueberries 150G"}]},
