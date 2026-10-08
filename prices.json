@@ -2,7 +2,7 @@
  "checked": "2026-10-08",
  "label": "8 Oct 2026",
  "autoNote": "Morrisons prices are refreshed automatically (everyday items every day, other items every few weeks).",
- "run": {"date":"2026-10-08","shops":{"morrisons":{"searches":124,"matched":88}}},
+ "run": {"date":"2026-10-08","shops":{"morrisons":{"searches":86,"matched":58}}},
  "prices": {
   "beef_mince": {
    "asda": {"packs":[[500,4.74]],"product":"Beef Mince 15% Fat","note":"15% fat, closest to 12%","checked":"2026-09-30"},
@@ -156,7 +156,7 @@
   "butter": {
    "tesco": {"packs":[[250,1.85]],"product":"Tesco British Salted Block Butter 250G","checked":"2026-10-05","items":[{"n":"Tesco British Salted Block Butter 250G"}]},
    "sainsburys": {"packs":[[250,1.85]],"product":"Sainsburys British Butter, Salted 250g","checked":"2026-10-05","items":[{"n":"Sainsburys British Butter, Salted 250g"}]},
-   "morrisons": {"packs":[[250,1.95,1.5]],"product":"Elmlea Creamy & Buttery Block Salted 250g","checked":"2026-10-08","items":[{"n":"Elmlea Creamy & Buttery Block Salted 250g","u":"https://groceries.morrisons.com/products/elmlea-creamy-buttery-block-salted-250g/115674241"}],"saleNote":"Was £1.95"}
+   "morrisons": {"packs":[[250,1.85]],"product":"Morrisons British Salted Butter 250g","checked":"2026-10-08","items":[{"n":"Morrisons British Salted Butter 250g","u":"https://groceries.morrisons.com/products/morrisons-british-salted-butter-250g/107007886"}]}
   },
   "plant_spread": {
    "tesco": {"packs":[[500,2.0]],"product":"Vitalite Dairy Free Spread 500G","checked":"2026-10-06","items":[{"n":"Vitalite Dairy Free Spread 500G"}],"note":"a brand: no own-label version found"},
