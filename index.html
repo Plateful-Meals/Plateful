@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-cLukXqAYxgn9BnM71hYiUbiP82nMIqrNRiV1qWpPvMM=' 'sha256-HcLI+HwI1M4jj3rEQIav1WUxcZkuxZBGCU1BLYCHGIg='; style-src 'unsafe-inline'; img-src 'self' data:; font-src data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-cLukXqAYxgn9BnM71hYiUbiP82nMIqrNRiV1qWpPvMM=' 'sha256-m8s/ABaOq8SBmFXaRVz8s58Vq/f/bLolI4PXUpZRWVo='; style-src 'unsafe-inline'; img-src 'self' data:; font-src data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
 <title>Plateful: the cheapest shop for your meal</title>
 <meta name="description" content="Plan your meals and compare what the whole shop would cost at nine UK supermarkets. Some prices are checked online and the rest are estimates.">
@@ -1553,6 +1553,42 @@ section.pf-home-logo .pf-logo.pf-logo--stack .pf-tagline{color:var(--on-band)}
 }
 .about-page .legal-body ul{padding-left:1.2em}
 .about-page .legal-body li{margin:0 0 10px}
+/* v46: shorter, tidier phone version. Folding only happens at phone width. */
+.f46-btn,.f46-more{display:none}
+@media (max-width:760px){
+  .f46-btn{display:flex;width:100%;align-items:center;justify-content:space-between;gap:10px;min-height:44px;padding:9px 14px;margin:8px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-weight:700;font-size:.95rem;text-align:left;cursor:pointer}
+  .f46-btn::after{content:'';width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);margin-top:-4px;flex:none}
+  .f46-btn[aria-expanded=true]::after{transform:rotate(-135deg);margin-top:4px}
+  .f46-btn.f46-mini{min-height:40px;padding:6px 12px;font-size:.88rem;font-weight:600;margin:4px 0;background:none}
+  .f46-f.f46-shut,.f46-h{display:none!important}
+  .f46-more{display:flex;gap:8px;margin:14px 0 6px}
+  .f46-more button{flex:1;min-height:46px;padding:8px 10px;border:1px solid var(--ink);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-weight:700;font-size:.92rem;cursor:pointer}
+  /* recipe cards: smaller picture, tighter text */
+  .meals{gap:10px}
+  .mcard .meal-img{max-height:84px;overflow:hidden}
+  .mcard .meal-img svg,.mcard .meal-img img{width:100%;height:84px;object-fit:cover}
+  .mcard .meal-body{padding:8px 10px 4px;gap:2px}
+  .mcard .meal-name{font-size:.92rem;line-height:1.2}
+  .mcard .meal-meta{font-size:.78rem}
+  .mcard .meal-price .each{display:none}
+  .mcard .pick{min-height:40px;font-size:.85rem;padding:6px 8px}
+  /* top of the home page and the two shortcut boxes */
+  .hero .lede{font-size:.92rem;line-height:1.4;margin-top:8px}
+  .promos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .l-promo{padding:12px;min-width:0}
+  .l-promo p{font-size:0;line-height:0;margin:0 0 8px}
+  .l-promo p strong{display:block;font-size:.95rem;line-height:1.25}
+  .l-promo .btn-ghost{min-height:40px;padding:6px 10px;font-size:.88rem}
+  /* ingredient rows, nutrition, steps */
+  .ing-row{padding-top:8px;padding-bottom:8px}
+  .steps li,.steps button.step{padding-top:10px;padding-bottom:10px}
+  nav.jump{flex-wrap:nowrap;overflow-x:auto;gap:14px;padding-bottom:4px}
+  nav.jump button,nav.jump a{white-space:nowrap}
+  /* my shop: recipe cards */
+  .bmeals .bm{padding:8px;grid-template-columns:64px minmax(0,1fr) auto;gap:4px 10px}
+  .bm .thumb{width:64px}
+  .bm .x{grid-column:auto;justify-self:end;min-height:40px}
+  .mealhead .dish-img{width:64%;margin:12px auto 0;display:block}}
 .o-prod a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 </style>
 </head>
@@ -9397,6 +9433,95 @@ document.addEventListener('click', e => {
   }
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape'){ const nav = document.querySelector('header .nav'); if (nav && nav.classList.contains('open')){ navMoreSet(false); const b = document.getElementById('nav-more'); if (b) b.focus(); } } });
+
+/* ================= v46 (9 Oct 2026): a tidier, shorter phone version =================
+   On phones (760px wide or less) long things start folded, with a button to show more:
+   the recipe lists (12 at a time), the filters, postcode/shops/loyalty cards, the full nutrition table,
+   the recipe steps (first 3), the shop-by-shop totals (first 4), the item lists in each answer, "Good to know",
+   the ingredient comparison table and the small print. Nothing is removed: every button opens what it hides.
+   What is open is remembered while the page is open (in memory only, nothing saved). */
+const T46 = {open:{}, shown:{}};
+const f46Key = k => (state.view || 'x') + ':' + k;
+function f46Sync(b, el, k, show, hide){
+  const shut = !T46.open[k];
+  el.classList.toggle('f46-shut', shut);
+  b.setAttribute('aria-expanded', shut ? 'false' : 'true');
+  b.textContent = shut ? show : hide;
+}
+function fold46(el, key, show, hide, mini){
+  if (!el || !el.parentNode) return;
+  const k = f46Key(key);
+  el.classList.add('f46-f');
+  let b = el.previousElementSibling;
+  if (!b || !b.classList || !b.classList.contains('f46-btn')){
+    b = document.createElement('button'); b.type = 'button'; b.className = 'f46-btn' + (mini ? ' f46-mini' : '');
+    b.addEventListener('click', () => { T46.open[b.dataset.k] = !T46.open[b.dataset.k]; f46Sync(b, el, b.dataset.k, show, hide || 'Hide'); });
+    el.parentNode.insertBefore(b, el);
+  }
+  b.dataset.k = k;
+  f46Sync(b, el, k, show, hide || 'Hide');
+}
+function unfold46(target){
+  for (let e = target; e && e !== document.body; e = e.parentElement){
+    if (e.classList && e.classList.contains('f46-f') && e.classList.contains('f46-shut')){
+      const b = e.previousElementSibling;
+      if (b && b.classList.contains('f46-btn')) b.click();
+    }
+  }
+}
+function limit46(list, n, step, key, noun){
+  if (!list || !list.parentNode) return;
+  const items = [...list.children];
+  list.classList.add('f46-l');
+  const k = f46Key(key) + ':' + (list.id || '');
+  const sig = items.length + ':' + (items[0] ? items[0].id || items[0].textContent.slice(0, 20) : '');
+  if (T46.shown[k] && T46.shown[k].sig !== sig) delete T46.shown[k];
+  let more = list.nextElementSibling;
+  if (!more || !more.classList || !more.classList.contains('f46-more')){
+    more = document.createElement('div'); more.className = 'f46-more';
+    list.parentNode.insertBefore(more, list.nextSibling);
+  }
+  if (items.length <= n + 1){ items.forEach(li => li.classList.remove('f46-h')); more.innerHTML = ''; return; }
+  const st = T46.shown[k] || (T46.shown[k] = {n, sig});
+  st.sig = sig;
+  const shown = Math.min(st.n, items.length);
+  items.forEach((li, i) => li.classList.toggle('f46-h', i >= shown));
+  const rest = items.length - shown;
+  more.innerHTML = '';
+  const mk = (txt, fn) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = txt; b.addEventListener('click', fn); more.appendChild(b); };
+  if (rest > 0){
+    const add = Math.min(step, rest);
+    mk(rest <= step ? `Show ${rest === 1 ? 'the last' : 'all ' + rest} ${noun}` : `Show ${add} more ${noun} (${rest} left)`, () => { st.n = shown + add; limit46(list, n, step, key, noun); });
+    if (rest > step) mk(`Show all ${items.length}`, () => { st.n = items.length; limit46(list, n, step, key, noun); });
+  } else {
+    mk('Show fewer', () => { st.n = n; limit46(list, n, step, key, noun); const r = list.getBoundingClientRect(); if (r.top < 0) list.scrollIntoView({block: 'start'}); });
+  }
+}
+function tidy46(){
+  if (window.PF_NO_FOLD) return;   // a hook for Plateful's own layout tests, which look at everything at once
+  document.querySelectorAll('.f46-btn').forEach(b => { const nx = b.nextElementSibling; if (!nx || !nx.classList.contains('f46-f')) b.remove(); });
+  document.querySelectorAll('.f46-more').forEach(m => { const pv = m.previousElementSibling; if (!pv || !pv.classList.contains('f46-l')) m.remove(); });
+  fold46(document.getElementById('rfilter'), 'rfilter', 'Filters: meal, goal and diet', 'Hide filters');
+  document.querySelectorAll('section.settings').forEach((s, i) => fold46(s, 'settings' + i, 'Postcode, shops and loyalty cards', 'Hide shop settings'));
+  fold46(document.getElementById('nutri-slot'), 'nutri', 'Full nutrition table', 'Hide nutrition table');
+  fold46(document.getElementById('tips'), 'tips', 'Good to know', 'Hide tips');
+  fold46(document.getElementById('matrix'), 'matrix', 'Show the ingredient table', 'Hide the ingredient table');
+  document.querySelectorAll('.ans-opt > ul, .bgroup > ul').forEach((u, i) => { const n = u.children.length; fold46(u, 'items' + i, `Show ${n} item${n === 1 ? '' : 's'}`, 'Hide items', true); });
+  document.querySelectorAll('p.credits').forEach((p, i) => fold46(p, 'credits' + i, 'Credits and licences', 'Hide credits', true));
+  document.querySelectorAll('ol.steps').forEach(l => limit46(l, 3, 99, 'steps', 'steps'));
+  document.querySelectorAll('ol.tots').forEach(l => limit46(l, 4, 99, 'tots', 'shops'));
+  document.querySelectorAll('ul.meals').forEach(l => limit46(l, 12, 12, 'meals', 'recipes'));
+}
+(function(){
+  let q = 0, obs = null;
+  const run = () => { q = 0; obs.disconnect(); try { tidy46(); } catch (e) {} obs.observe(document.body, {childList:true, subtree:true}); };
+  obs = new MutationObserver(() => { if (!q) q = requestAnimationFrame(run); });
+  document.addEventListener('click', e => {
+    const j = e.target.closest && e.target.closest('[data-act="jump"]');
+    if (j && j.dataset.to) { const t = document.getElementById(j.dataset.to); if (t) unfold46(t); }
+  }, true);
+  run();
+})();
 
 /* plain http is never used: move to https (GitHub Pages does the same once "Enforce HTTPS" is ticked) */
 try { if (location.protocol === 'http:' && !/^(localhost|127\.\d+\.\d+\.\d+|\[::1\])$/.test(location.hostname) && !/\.localhost$/.test(location.hostname)) location.replace('https://' + location.host + location.pathname + location.search + location.hash); } catch (e) {}
