@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-cLukXqAYxgn9BnM71hYiUbiP82nMIqrNRiV1qWpPvMM=' 'sha256-uIoOvdpRhiRH4gJkXtO8Yw52EFE9+dwECFZeZSU8oEs='; style-src 'unsafe-inline'; img-src 'self' data:; font-src data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-cLukXqAYxgn9BnM71hYiUbiP82nMIqrNRiV1qWpPvMM=' 'sha256-HcLI+HwI1M4jj3rEQIav1WUxcZkuxZBGCU1BLYCHGIg='; style-src 'unsafe-inline'; img-src 'self' data:; font-src data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
 <title>Plateful: the cheapest shop for your meal</title>
 <meta name="description" content="Plan your meals and compare what the whole shop would cost at nine UK supermarkets. Some prices are checked online and the rest are estimates.">
@@ -1551,6 +1551,8 @@ section.pf-home-logo .pf-logo.pf-logo--stack .pf-tagline{color:var(--on-band)}
   .b-top #answer{order:0}
   .b-top .b-side .settings{order:1}
 }
+.about-page .legal-body ul{padding-left:1.2em}
+.about-page .legal-body li{margin:0 0 10px}
 .o-prod a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 </style>
 </head>
@@ -2001,7 +2003,7 @@ body[data-view="meal"] .pf-home-logo,body[data-view="basket"] .pf-home-logo,body
     <a class="btn fb-btn" id="fb-go" href="#feedback" target="_blank" rel="noopener noreferrer">Give feedback<span class="sr"> (opens Google Forms in a new tab)</span></a>
   </section>
   <div id="live-foot"></div>
-  <nav class="foot-nav" aria-label="About this site"><a href="#privacy" id="foot-privacy" data-act="page" data-p="privacy">Privacy</a><a href="#terms" id="foot-terms" data-act="page" data-p="terms">Terms of use</a></nav>
+  <nav class="foot-nav" aria-label="About this site"><a href="#about" id="foot-about-page" data-act="page" data-p="about">About Plateful</a><a href="#privacy" id="foot-privacy" data-act="page" data-p="privacy">Privacy</a><a href="#terms" id="foot-terms" data-act="page" data-p="terms">Terms of use</a></nav>
   <p class="foot-priv">No cookies, no adverts and no tracking. Your choices are saved in this browser only.</p>
   <p class="credits">Store locations: Geolytix Retail Points, June 2026, open data. Contains public sector information licensed under the Open Government Licence v3.0. Contains Ordnance Survey data © Crown copyright and database right, Royal Mail data © Royal Mail copyright and database right, and National Statistics data © Crown copyright and database right. Postcode areas: Office for National Statistics data, Open Government Licence v3.0, and GeoNames, CC BY 4.0. Maps: Google Maps. Typeface: Archivo, SIL Open Font Licence.</p>
   <p class="made-by">© <span id="foot-year">2026</span> Plateful. Made by Noah.</p>
@@ -5400,7 +5402,7 @@ function render(){
   if (state.view === 'editor' && !state.draft) state.view = 'home';
   const v = state.view;
   const bar = (v === 'home' || v === 'meal' || v === 'leftovers' || v === 'budget' || v === 'plan' || v === 'favs' || v === 'prev') && state.basket.length ? shopbarHTML() : '';
-  app.innerHTML = (v === 'home' ? homeHTML() : v === 'meal' ? mealHTML() : v === 'basket' ? basketHTML() : v === 'leftovers' ? leftoversHTML() : v === 'mylist' ? mylistHTML() : v === 'budget' ? budgetHTML() : v === 'plan' ? planHTML() : v === 'favs' ? favsHTML() : v === 'prev' ? prevHTML() : v === 'saved' ? savedHTML() : v === 'privacy' ? privacyHTML() : v === 'terms' ? termsHTML() : editorHTML()) + bar;
+  app.innerHTML = (v === 'home' ? homeHTML() : v === 'meal' ? mealHTML() : v === 'basket' ? basketHTML() : v === 'leftovers' ? leftoversHTML() : v === 'mylist' ? mylistHTML() : v === 'budget' ? budgetHTML() : v === 'plan' ? planHTML() : v === 'favs' ? favsHTML() : v === 'prev' ? prevHTML() : v === 'saved' ? savedHTML() : v === 'about' ? aboutPlatefulHTML() : v === 'privacy' ? privacyHTML() : v === 'terms' ? termsHTML() : editorHTML()) + bar;
   document.body.dataset.view = v;
   weekSlotFill();
   dishFill();
@@ -8238,7 +8240,7 @@ function feedbackBoot(){
   if (!s || !a) return;
   if (u){ if (a.getAttribute('href') !== u) a.setAttribute('href', u); s.hidden = false; } else s.hidden = true;
 }
-const LEGAL = {privacy: 'Privacy', terms: 'Terms of use'};
+const LEGAL = {about: 'About Plateful', privacy: 'Privacy', terms: 'Terms of use'};
 const PF_TITLE0 = document.title;
 let PF_BOOTED = false;
 
@@ -8265,7 +8267,7 @@ function legalBoot(){
 function pageTitle(){
   const v = state.view;
   if (v === 'meal'){ const m = mealById(state.mealId); return (m ? m.n : 'Recipe') + ' · Plateful'; }
-  const t = {basket: 'My shop', budget: 'Budget', saved: 'How much you have saved', leftovers: 'Leftovers', mylist: 'Shopping list', editor: 'Your recipe', privacy: 'Privacy', terms: 'Terms of use'}[v];
+  const t = {basket: 'My shop', budget: 'Budget', saved: 'How much you have saved', leftovers: 'Leftovers', mylist: 'Shopping list', editor: 'Your recipe', about: 'About', privacy: 'Privacy', terms: 'Terms of use'}[v];
   return t ? t + ' · Plateful' : PF_TITLE0;
 }
 /* called at the end of every draw */
@@ -8379,6 +8381,39 @@ function privacyHTML(){
       <p>Plateful is a personal project made by Noah. It is not a business, it sells nothing and it carries no adverts. The ${pageLink('terms', 'terms of use')} explain what the site does and does not promise.</p>
 
       <p class="legal-date">If Plateful ever starts to collect anything, this page will say so first. Last updated ${PF_UPDATED}.</p>
+    </div>
+  </section>`;
+}
+function aboutPlatefulHTML(){
+  const n = (typeof MEALS !== 'undefined' ? MEALS.filter(m => !m.custom).length : 0);
+  return `<section class="wrap legal about-page" aria-labelledby="legal-h1">
+    <button type="button" class="back" id="back" data-act="home">Back to recipes</button>
+    <h1 id="legal-h1" tabindex="-1">About Plateful</h1>
+    <p class="lede">Plateful helps you work out what to eat, and the cheapest way to buy it, so good food stays affordable.</p>
+    <div class="legal-body">
+      <h2>Why I made it</h2>
+      <p>It started with a simple thing I kept noticing: the same food doesn't cost the same everywhere. A pack of mince, a bag of rice or a block of cheese can be noticeably cheaper in one supermarket than in the one down the road, and over a whole shop those differences add up. But nobody has time to check every shelf in every shop before deciding what to have for tea.</p>
+      <p>So the first idea was small: help people find the cheapest way to buy their food shop, so they can keep more of their money.</p>
+
+      <h2>How it grew</h2>
+      <p>Once I started, it spiralled. Knowing the cheapest price is only useful if it is easy to act on, and saving money is only half the problem. The other half is deciding what to eat in the first place, and being able to afford the food you actually want rather than just the cheapest thing on the shelf.</p>
+      <p>Plateful grew into a way to make the whole food shop easier and cheaper: start from the meal you fancy, see what it costs, and find the best place to buy it.</p>
+
+      <h2>What Plateful does</h2>
+      <ul>
+        <li><strong>Recipes with real costs.</strong> ${n ? n + ' ' : ''}everyday recipes, each priced at nine UK supermarkets, with step-by-step instructions and nutrition worked out for the number of people you are feeding.</li>
+        <li><strong>The cheapest way to shop.</strong> Add several meals to My shop and Plateful prices them as one shop, counting the pack sizes you'd really have to buy, and shows whether splitting the shop between supermarkets is worth it.</li>
+        <li><strong>A shopping list that works with you.</strong> Tick things off as you buy them, press "Finished shop" when you're done, and see what you spent and saved.</li>
+        <li><strong>Planning and budgeting.</strong> Plan the week's meals, set a budget, keep your favourites, and use up what's already in your fridge with the Leftovers page.</li>
+      </ul>
+
+      <h2>About the prices</h2>
+      <p>Some prices are checked on the supermarkets' own websites and marked live, with the date they were checked. Others are estimates, worked out from the prices that were checked, and are clearly labelled as estimates. Prices change all the time and can differ in store, so treat Plateful as a guide and check the shelf before you buy.</p>
+
+      <h2>What Plateful isn't</h2>
+      <p>Plateful is an independent, personal project. It isn't run by or paid by any supermarket, it is free to use, and it has no adverts, no tracking and no accounts. What you save stays in your own browser: the ${pageLink('privacy', 'privacy page')} explains exactly what that is and how to delete it.</p>
+
+      <p class="legal-date">The ground rules are on the ${pageLink('terms', 'terms of use')} page.</p>
     </div>
   </section>`;
 }
