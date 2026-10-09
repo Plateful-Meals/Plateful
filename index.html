@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-cLukXqAYxgn9BnM71hYiUbiP82nMIqrNRiV1qWpPvMM=' 'sha256-m8s/ABaOq8SBmFXaRVz8s58Vq/f/bLolI4PXUpZRWVo='; style-src 'unsafe-inline'; img-src 'self' data:; font-src data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-cLukXqAYxgn9BnM71hYiUbiP82nMIqrNRiV1qWpPvMM=' 'sha256-z5fmTpWOvqeYgQjxD7h9oIIy695J6G6KTo2GRaSGCSM='; style-src 'unsafe-inline'; img-src 'self' data:; font-src data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
 <title>Plateful: the cheapest shop for your meal</title>
 <meta name="description" content="Plan your meals and compare what the whole shop would cost at nine UK supermarkets. Some prices are checked online and the rest are estimates.">
@@ -1589,6 +1589,60 @@ section.pf-home-logo .pf-logo.pf-logo--stack .pf-tagline{color:var(--on-band)}
   .bm .thumb{width:64px}
   .bm .x{grid-column:auto;justify-self:end;min-height:40px}
   .mealhead .dish-img{width:64%;margin:12px auto 0;display:block}}
+/* v47 (10 Oct 2026): phone-only polish. Everything below sits inside the phone media query, so desktop is untouched. */
+.pf47-top{display:none}
+@media (max-width:760px){
+  html{-webkit-tap-highlight-color:transparent}
+  body{line-height:1.55;overscroll-behavior-y:none}
+  h1,h2,h3{letter-spacing:-.005em}
+  h2{font-size:1.5rem}
+  /* sticky slim header with a soft shadow once the page has moved */
+  body[data-view]:not([data-view="home"]) header.top{position:sticky;top:0;z-index:50;background:var(--surface);transition:box-shadow .2s}
+  body[data-view]:not([data-view="home"]) header.top.pf47-lift{box-shadow:0 2px 10px rgba(20,35,25,.14)}
+  html{scroll-padding-top:68px}
+  /* bottom tab bar: lifted off the page, press feedback */
+  header.top .nav{box-shadow:0 -4px 16px rgba(20,35,25,.10)}
+  header.top .nav-b{transition:color .15s,background-color .15s;-webkit-tap-highlight-color:transparent}
+  header.top .nav-b:active{background:var(--harbour-soft)}
+  header.top .nav-b[aria-current="page"] .nav-i{stroke-width:2.1}
+  /* buttons: 44px targets, a little letter-spacing, press feedback */
+  button,.pick,.btn,.btn-ghost{letter-spacing:.2px}
+  .pick,.f46-btn.f46-mini,.f46-more button,.stepper button,.bm .x,.btn,.btn-ghost{min-height:44px}
+  .mcard .pick{min-height:44px}
+  .pick:active,.btn:active,.btn-ghost:active,.f46-btn:active,.f46-more button:active{transform:scale(.98)}
+  .pick,.btn,.btn-ghost,.f46-btn,.f46-more button{transition:transform .08s,background-color .15s}
+  /* clearer keyboard / switch-access focus */
+  :focus-visible{outline:3px solid var(--harbour);outline-offset:3px;border-radius:8px}
+  /* recipe cards: defined edges, soft shadow */
+  .mcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(20,35,25,.06),0 4px 12px rgba(20,35,25,.06)}
+  .mcard .meal-img{border-radius:0}
+  .mcard .meal-body{padding:10px 12px 6px;gap:4px}
+  .mcard .pick{margin:0 12px 12px;width:calc(100% - 24px);border-radius:10px}
+  .meals{gap:14px 12px}
+  /* other boxes: same family of card */
+  .l-promo,.sv-hero,.sv-all,.wk,.near,.lcard,.idea,.basket,.legal-box,.tips{border:1px solid var(--line);box-shadow:0 1px 2px rgba(20,35,25,.05)}
+  .l-promo:active{background:var(--harbour-soft)}
+  /* folded-section buttons read as controls */
+  .f46-btn{box-shadow:0 1px 2px rgba(20,35,25,.06)}
+  .f46-btn[aria-expanded=true]{background:var(--harbour-soft);border-color:var(--harbour)}
+  /* search box: easier thumb target */
+  .search input{padding:14px 16px;border-radius:12px}
+  /* toast: rounded, slides up */
+  .toast{border-radius:12px;animation:pf47-toast .22s ease-out}
+  @keyframes pf47-toast{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+  /* images: soft placeholder while they load */
+  .meal-img img,.dish-img,.thumb img{background:var(--table)}
+  /* empty states */
+  .empty{text-align:center;padding:28px 16px;border:1px dashed var(--line);border-radius:14px;background:var(--surface)}
+  /* back-to-top */
+  .pf47-top{display:grid;place-items:center;position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(74px + env(safe-area-inset-bottom,0px));z-index:54;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--harbour);box-shadow:0 4px 14px rgba(20,35,25,.18);cursor:pointer;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s}
+  .pf47-top.on{opacity:1;pointer-events:auto;transform:none}
+  body.has-bar .pf47-top{bottom:calc(170px + env(safe-area-inset-bottom,0px))}
+  .pf47-top svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+}
+@media (max-width:760px) and (prefers-reduced-motion:reduce){
+  .toast,.pf47-top,.pick,.btn,.btn-ghost,.f46-btn,.f46-more button{animation:none;transition:none}
+}
 .o-prod a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 </style>
 </head>
@@ -9520,6 +9574,33 @@ function tidy46(){
     const j = e.target.closest && e.target.closest('[data-act="jump"]');
     if (j && j.dataset.to) { const t = document.getElementById(j.dataset.to); if (t) unfold46(t); }
   }, true);
+  run();
+})();
+
+/* v47: phone-only helpers (header shadow, back-to-top, lazy images). Does nothing above phone width. */
+(function(){
+  const mq = window.matchMedia('(max-width:760px)');
+  const top = document.createElement('button');
+  top.type = 'button'; top.className = 'pf47-top'; top.setAttribute('aria-label', 'Back to top');
+  top.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg>';
+  top.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
+  document.body.appendChild(top);
+  const hd = () => document.querySelector('header.top');
+  const onScroll = () => {
+    if (!mq.matches) { top.classList.remove('on'); const h = hd(); if (h) h.classList.remove('pf47-lift'); return; }
+    const y = window.scrollY || document.documentElement.scrollTop;
+    top.classList.toggle('on', y > 900);
+    const h = hd(); if (h) h.classList.toggle('pf47-lift', y > 8);
+  };
+  window.addEventListener('scroll', onScroll, {passive: true});
+  mq.addEventListener && mq.addEventListener('change', onScroll);
+  function polish47(){
+    if (!mq.matches) return;
+    document.querySelectorAll('.mcard .meal-img img:not([loading])').forEach(i => i.setAttribute('loading', 'lazy'));
+  }
+  let q = 0, obs;
+  const run = () => { q = 0; obs.disconnect(); try { polish47(); onScroll(); } catch (e) {} obs.observe(document.body, {childList: true, subtree: true}); };
+  obs = new MutationObserver(() => { if (!q) q = requestAnimationFrame(run); });
   run();
 })();
 
